@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MADMAT • Fresh Vibes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;family=VT323&amp;display=swap');
+        
+        :root {
+            --neon-pink: #ff00cc;
+            --neon-purple: #9900ff;
+        }
+        
+        .neon-text {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 
+                0 0 10px var(--neon-pink),
+                0 0 20px var(--neon-pink),
+                0 0 40px var(--neon-pink),
+                0 0 10px var(--neon-purple),
+                0 0 20px var(--neon-purple),
+                0 0 40px var(--neon-purple);
+        }
+        
+        .glass {
+            background: rgba(10, 10, 20, 0.65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 0, 204, 0.15);
+        }
+        
+        .track-card {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .track-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 0, 204, 0.4);
+        }
+        
+        .neon-button {
+            transition: all 0.3s ease;
+        }
+        
+        .neon-button:hover {
+            box-shadow: 0 0 25px var(--neon-pink),
+                        0 0 40px var(--neon-purple);
+            transform: scale(1.05);
+        }
+        
+        .comment {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(255, 0, 204, 0.03) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            animation: scan 4s linear infinite;
+            z-index: 2;
+            opacity: 0.15;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(300%); }
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- CANVAS BACKGROUND (Neon Digital Rain - Blade Runner / Cyberpunk Tokyo vibe) -->
+    <canvas id="canvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+
+    <!-- OVERLAY SCANLINES + SUBTLE GRID -->
+    <div class="fixed inset-0 z-10 pointer-events-none scanline"></div>
+    <div class="fixed inset-0 z-5 bg-[radial-gradient(circle,#ff00cc10_1px,transparent_1px)] bg-[length:40px_40px] opacity-10 pointer-events-none"></div>
+
+    <div class="relative z-20 min-h-screen">
+        <!-- HEADER -->
+        <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+                <!-- NEON LOGO -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center shadow-[0_0_30px_#ff00cc]">
+                        <span class="text-white text-2 font-bold tracking-tighter">MM</span>
+                    </div>
+                    <h1 class="neon-text text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400">MADMAT</h1>
+                </div>
+                
+                <!-- NAV -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="#music" onclick="smoothScrollTo('music')" class="hover:text-pink-400 transition-colors">TRACKS</a>
+                    <a href="#about" onclick="smoothScrollTo('about')" class="hover:text-pink-400 transition-colors">ABOUT</a>
+                    <a href="#contact" onclick="smoothScrollTo('contact')" class="hover:text-pink-400 transition-colors">CONNECT</a>
+                </nav>
+                
+                <div class="flex items-center gap-4">
+                    <button onclick="document.getElementById('music').scrollIntoView({behavior:'smooth'})" 
+                            class="neon-button px-6 py-2.5 text-xs font-bold border border-pink-400 text-pink-400 hover:bg-pink-400 hover:text-black rounded-full">
+                        LISTEN NOW
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="min-h-screen flex items-center justify-center relative pt-20">
+            <div class="text-center max-w-3xl px-6">
+                <div class="inline-flex items-center gap-2 px-6 py-2 glass rounded-full mb-8 border border-purple-400/30">
+                    <div class="w-2 h-2 bg-pink-400 rounded-full animate-pulse"></div>
+                    <span class="text-xs tracking-[3px] text-purple-300 font-mono">2088 • TRANSMISSION WOOD ONE</span>
+                </div>
+                
+                <h2 class="neon-text text-7xl md:text-8xl font-bold leading-none tracking-tighter mb-4">
+                    MADMAT
+                </h2>
+                <p class="text-2xl text-purple-300 font-light tracking-wide">SYNTHWAVE FROM THE UNDERCITY</p>
+                
+                <div class="mt-12 flex justify-center">
+                    <a href="#music" onclick="smoothScrollTo('music')" 
+                       class="neon-button group flex items-center gap-4 bg-black border border-pink-400 px-10 py-5 text-pink-400 hover:text-black hover:bg-pink-400 rounded-2xl text-lg font-bold transition-all">
+                        <i class="fa-solid fa-play"></i>
+                        <span>STREAM THE FUTURE</span>
+                    </a>
+                </div>
+                
+                <div class="mt-24 text-xs font-mono text-purple-400/70 flex items-center justify-center gap-8">
+                    <div>STREAM</div>
+                    <div>REAL-TIME COMMENTS</div>
+                    <div>NEVER OFFLINE</div>
+                </div>
+            </div>
+            
+            <!-- SCROLL INDICATOR -->
+            <div class="absolute bottom-10 left-1/2 flex flex-col items-center text-purple-400/50 text-xs">
+                <div class="animate-bounce">↓</div>
+                <span class="tracking-widest">SCROLL TO ENTER THE GRID</span>
+            </div>
+        </section>
+
+        <!-- MUSIC SECTION -->
+        <section id="music" class="max-w-7xl mx-auto px-6 py-24">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="font-mono text-pink-400 text-sm tracking-[4px]">LIVE FROM THE UNDERCITY</span>
+                    <h2 class="neon-text text-6xl font-bold">TRACKS</h2>
+                </div>
+                <div class="text-purple-400 text-sm">3 TRANSMISSIONS • CLICK TO PLAY</div>
+            </div>
+            
+            <div id="tracks-container" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Tracks populated by JS -->
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="glass mx-6 max-w-4xl mx-auto rounded-3xl p-16 mb-24">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h3 class="neon-text text-5xl font-bold mb-8">WHO IS MADMAT?</h3>
+                    <p class="text-lg text-purple-200 leading-relaxed">
+                        A rogue synthwave producer from the flooded districts of Neo-Tokyo. 
+                        Blending 80s vapor, J-pop glitches, and Blade Runner rain. 
+                        Every track is a transmission from the underground.
+                    </p>
+                    <div class="mt-10 grid grid-cols-3 gap-6 text-center text-sm">
+                        <div class="border border-purple-400/30 p-4 rounded-2xl">
+                            <div class="text-pink-400 text-3xl font-mono">2088</div>
+                            <div class="text-purple-400 text-xs">EST.</div>
+                        </div>
+                        <div class="border border-purple-400/30 p-4 rounded-2xl">
+                            <div class="text-pink-400 text-3xl font-mono">∞</div>
+                            <div class="text-purple-400 text-xs">LISTENERS</div>
+                        </div>
+                        <div class="border border-purple-400/30 p-4 rounded-2xl">
+                            <div class="text-pink-400 text-3xl font-mono">3</div>
+                            <div class="text-purple-400 text-xs">TRACKS</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://picsum.photos/id/1015/600/600" alt="Artist Portrait" 
+                         class="rounded-3xl shadow-2xl border border-pink-400/30">
+                    <div class="absolute -bottom-6 -right-6 glass px-8 py-6 rounded-3xl border border-purple-400">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-headphones text-3xl text-pink-400"></i>
+                            <div>
+                                <div class="font-mono text-xs">CURRENTLY STREAMING</div>
+                                <div class="text-lg font-bold">NEON DRIFT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT / SOCIAL -->
+        <section id="contact" class="max-w-7xl mx-auto px-6 py-24 text-center">
+            <div class="glass max-w-md mx-auto p-12 rounded-3xl">
+                <h3 class="neon-text text-4xl mb-8">TRANSMIT YOUR SIGNAL</h3>
+                <p class="text-purple-300 mb-10">Drop a comment, follow the signal, or send a transmission.</p>
+                
+                <div class="flex justify-center gap-8 text-4xl">
+                    <a href="#" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-soundcloud"></i></a>
+                </div>
+                
+                <div class="mt-12 text-xs font-mono text-purple-400/60">
+                    © 2088 NEON ECHO • ALL TRANSMISSIONS PROTECTED
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-8 text-purple-400/40 text-xs font-mono border-t border-white/10">
+            BUILT FOR THE GRID
+        </footer>
+    </div>
+
+    <script>
+        // Tailwind script init
+        function initTailwind() {
+            // Already loaded via CDN
+        }
+
+        // === DIGITAL RAIN CANVAS ===
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let columns = [];
+        let fontSize = 16;
+        let drops = [];
+        const chars = "ネオン東京0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+        
+        function resizeCanvas() {
+            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+            const cols = Math.floor(canvas.width / fontSize);
+            columns = Array(cols).fill(1);
+            drops = Array(cols).fill(1);
+        }
+        
+        function drawRain() {
+            ctx.fillStyle = 'rgba(3, 3, 12, 0.15)'; // dark fade
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#ff00cc';
+            ctx.font = `${fontSize}px VT323`;
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+                
+                // occasional purple glow
+                if (Math.random() > 0.92) {
+                    ctx.fillStyle = '#9900ff';
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    ctx.fillStyle = '#ff00cc';
+                }
+            }
+        }
+        
+        function startRain() {
+            resizeCanvas();
+            setInterval(drawRain, 45);
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+            });
+        }
+        
+        // === TRACK DATA ===
+        let tracks = [
+            {
+                id: 1,
+                title: "NEON DRIFT",
+                artist: "MADMAT",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                cover: "https://picsum.photos/id/1015/600/600",
+                comments: [
+                    { user: "CyberRonin", text: "This hits different at 3am in the rain 🔥", time: "2h ago" },
+                    { user: "PixelGhost", text: "The synth lead is pure Tokyo nostalgia", time: "14h ago" }
+                ]
+            },
+            {
+                id: 2,
+                title: "PURPLE PULSE",
+                artist: "MADMAT",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                cover: "https://picsum.photos/id/201/600/600",
+                comments: [
+                    { user: "VaporFox", text: "Instant repeat. The drop at 1:42 is insane", time: "1d ago" }
+                ]
+            },
+            {
+                id: 3,
+                title: "TOKYO SHADOW",
+                artist: "NEON ECHONEON ECHO",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                cover: "https://picsum.photos/id/29/600/600",
+                comments: []
+            }
+        ];
+        
+        let currentPlaying = null;
+        
+        // Render all tracks
+        function renderTracks() {
+            const container = document.getElementById('tracks-container');
+            container.innerHTML = '';
+            
+            tracks.forEach(track => {
+                const cardHTML = `
+                <div class="track-card glass rounded-3xl overflow-hidden border border-white/10">
+                    <!-- Cover -->
+                    <div class="relative">
+                        <img src="${track.cover}" alt="${track.title}" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                        
+                        <!-- Play overlay -->
+                        <button onclick="togglePlay(${track.id})" 
+                                id="play-btn-${track.id}"
+                                class="absolute inset-0 flex items-center justify-center text-6xl text-white/80 hover:text-pink-400 transition-all">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Player Info -->
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-bold text-xl">${track.title}</div>
+                                <div class="text-purple-400 text-sm">${track.artist}</div>
+                            </div>
+                            <div class="text-right">
+                                <div onclick="togglePlay(${track.id})" 
+                                     class="cursor-pointer text-3xl text-pink-400">
+                                    <i class="fa-solid fa-circle-play" id="icon-${track.id}"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Audio Player -->
+                        <div class="mt-6">
+                            <audio id="audio-${track.id}" src="${track.src}" preload="metadata"></audio>
+                            
+                            <div class="flex items-center gap-4">
+                                <span id="time-${track.id}" class="font-mono text-xs text-purple-400 w-12">0:00</span>
+                                
+                                <div class="flex-1 h-1 bg-white/10 rounded-full relative cursor-pointer" 
+                                     onclick="seek(this, event, ${track.id})">
+                                    <div id="progress-${track.id}" 
+                                         class="absolute top-0 left-0 h-1 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full transition-all"
+                                         style="width: 0%"></div>
+                                </div>
+                                
+                                <span class="font-mono text-xs text-purple-400">—</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comments -->
+                    <div class="border-t border-white/10 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-mono text-purple-400">COMMENTS FROM THE GRID</span>
+                            <span class="text-pink-400 text-xs cursor-pointer hover:underline" onclick="showCommentForm(${track.id})">+ ADD</span>
+                        </div>
+                        
+                        <div id="comments-list-${track.id}" class="space-y-4 max-h-64 overflow-y-auto pr-2">
+                            <!-- Populated by JS -->
+                        </div>
+                        
+                        <!-- Comment form (hidden by default) -->
+                        <div id="comment-form-${track.id}" class="hidden mt-6">
+                            <input type="text" id="comment-name-${track.id}" 
+                                   class="w-full bg-black/50 border border-purple-400/30 rounded-xl px-5 py-3 text-sm focus:outline-none focus:border-pink-400 placeholder:text-purple-400"
+                                   placeholder="YOUR HANDLE">
+                            <textarea id="comment-text-${track.id}" rows="2"
+                                      class="w-full mt-3 bg-black/50 border border-purple-400/30 rounded-xl px-5 py-3 text-sm focus:outline-none focus:border-pink-400 resize-none"
+                                      placeholder="LEAVE FEEDBACK..."></textarea>
+                            <div class="flex gap-3 mt-3">
+                                <button onclick="addComment(${track.id}); hideCommentForm(${track.id})" 
+                                        class="flex-1 py-3 bg-pink-400 hover:bg-pink-500 text-black font-bold rounded-2xl text-sm">TRANSMIT</button>
+                                <button onclick="hideCommentForm(${track.id})" 
+                                        class="flex-1 py-3 border border-white/30 hover:border-white/60 rounded-2xl text-sm">CANCEL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                container.innerHTML += cardHTML;
+            });
+            
+            // Render comments after cards exist
+            tracks.forEach(track => renderComments(track.id));
+        }
+        
+        function renderComments(trackId) {
+            const list = document.getElementById(`comments-list-${trackId}`);
+            const track = tracks.find(t => t.id === trackId);
+            if (!list || !track) return;
+            
+            list.innerHTML = track.comments.map(c => `
+                <div class="comment bg-black/40 border-l-2 border-purple-400 pl-4 py-1">
+                    <div class="flex justify-between text-xs">
+                        <span class="font-medium text-pink-300">${c.user}</span>
+                        <span class="text-purple-400/70">${c.time}</span>
+                    </div>
+                    <div class="text-sm mt-1">${c.text}</div>
+                </div>
+            `).join('');
+        }
+        
+        function showCommentForm(trackId) {
+            const form = document.getElementById(`comment-form-${trackId}`);
+            form.classList.remove('hidden');
+            form.classList.add('flex', 'flex-col');
+        }
+        
+        function hideCommentForm(trackId) {
+            const form = document.getElementById(`comment-form-${trackId}`);
+            form.classList.add('hidden');
+        }
+        
+        function addComment(trackId) {
+            const nameInput = document.getElementById(`comment-name-${trackId}`);
+            const textInput = document.getElementById(`comment-text-${trackId}`);
+            const track = tracks.find(t => t.id === trackId);
+            
+            if (!textInput.value.trim()) return;
+            
+            const name = nameInput.value.trim() || "GRIDWALKER";
+            
+            track.comments.unshift({
+                user: name,
+                text: textInput.value.trim(),
+                time: "just now"
+            });
+            
+            // Save to localStorage
+            localStorage.setItem(`neonecho_comments_${trackId}`, JSON.stringify(track.comments));
+            
+            renderComments(trackId);
+            
+            // Clear form
+            textInput.value = '';
+            nameInput.value = '';
+        }
+        
+        // Load saved comments
+        function loadSavedComments() {
+            tracks.forEach(track => {
+                const saved = localStorage.getItem(`neonecho_comments_${track.id}`);
+                if (saved) {
+                    track.comments = JSON.parse(saved);
+                }
+            });
+        }
+        
+        // AUDIO CONTROL
+        function togglePlay(trackId) {
+            const audio = document.getElementById(`audio-${trackId}`);
+            const icon = document.getElementById(`icon-${trackId}`);
+            const playBtn = document.getElementById(`play-btn-${trackId}`);
+            
+            // Pause any currently playing
+            if (currentPlaying && currentPlaying !== trackId) {
+                const currentAudio = document.getElementById(`audio-${currentPlaying}`);
+                currentAudio.pause();
+                document.getElementById(`icon-${currentPlaying}`).classList.replace('fa-pause', 'fa-circle-play');
+            }
+            
+            if (audio.paused) {
+                audio.play();
+                icon.classList.replace('fa-circle-play', 'fa-pause');
+                currentPlaying = trackId;
+                
+                // Update progress
+                updateProgress(trackId);
+            } else {
+                audio.pause();
+                icon.classList.replace('fa-pause', 'fa-circle-play');
+                currentPlaying = null;
+            }
+        }
+        
+        function updateProgress(trackId) {
+            const audio = document.getElementById(`audio-${trackId}`);
+            const progressBar = document.getElementById(`progress-${trackId}`);
+            const timeEl = document.getElementById(`time-${trackId}`);
+            
+            const interval = setInterval(() => {
+                if (!audio.paused) {
+                    const percent = (audio.currentTime / audio.duration) * 100 || 0;
+                    progressBar.style.width = `${percent}%`;
+                    
+                    const minutes = Math.floor(audio.currentTime / 60);
+                    const seconds = Math.floor(audio.currentTime % 60);
+                    timeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 200);
+        }
+        
+        function seek(progressContainer, e, trackId) {
+            const audio = document.getElementById(`audio-${trackId}`);
+            const rect = progressContainer.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        }
+        
+        // Smooth scroll helper
+        function smoothScrollTo(section) {
+            const el = document.getElementById(section);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Keyboard support (space = play/pause current)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === " " && currentPlaying) {
+                e.preventDefault();
+                togglePlay(currentPlaying);
+            }
+        });
+        
+        // Initialize everything
+        function initializeSite() {
+            startRain();
+            loadSavedComments();
+            renderTracks();
+            
+            // Make audio elements update icons when ended
+            tracks.forEach(track => {
+                const audio = document.getElementById(`audio-${track.id}`);
+                audio.addEventListener('ended', () => {
+                    const icon = document.getElementById(`icon-${track.id}`);
+                    if (icon) icon.classList.replace('fa-pause', 'fa-circle-play');
+                    currentPlaying = null;
+                });
+            });
+            
+            // Mobile friendly touch
+            console.log('%cNEON ECHO website ready. All streaming only. Comments saved locally.', 'color:#ff00cc; font-family:monospace');
+        }
+        
+        window.onload = initializeSite;
+    </script>
+</body>
+</html>
